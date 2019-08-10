@@ -1,22 +1,37 @@
-const PORT = process.env.PORT || 3000;
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
+
+const { PORT } = require("./config/config");
+const { sequelize } = require("./models");
+const routes = require("./routes");
+const {
+  notFound,
+  developmentErrors,
+  productionErrors
+} = require("./errorHandlers");
 
 const app = express();
 app.use(morgan("combined"));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/register", (req, res) => {
-  res.send({ message: `Hello there ${req.body.email}` });
-});
+app.use("/", routes);
 
-app.use("**", (req, res) => {
-  res.json(`Server is up ${new Date()}`);
-});
+app.use(notFound);
 
-app.listen(PORT, () => {
-  console.log(`Express app running on ${PORT}`);
+// catch and send errors
+if (process.env.NODE_ENV === "development") {
+  /* Development Error Handler - Prints stack trace */
+  app.use(developmentErrors);
+}
+
+// production error handler
+app.use(productionErrors);
+
+sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Express app running on ${PORT}`);
+  });
 });
