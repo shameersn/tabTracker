@@ -1,7 +1,7 @@
-import Api from '@service/Api';
+import Api from "@/service/Api";
 
 export default {
   register(credentials) {
-    return Api.post('register', credentials);
+    return Api().post("auth/register", credentials);
   }
-}
+};
