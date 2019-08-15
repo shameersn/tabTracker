@@ -7,8 +7,8 @@
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <v-btn to="register" color="warning" dark>Register</v-btn>
-    <v-btn class="ma-2" to="login" color="warning" dark>Login</v-btn>
+    <v-btn v-if="!$store.state.isLoggedIn" to="register" color="warning" dark>Register</v-btn>
+    <v-btn v-if="!$store.state.isLoggedIn" class="ma-2" to="login" color="warning" dark>Login</v-btn>
   </v-app-bar>
 </template>
 
