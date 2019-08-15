@@ -9,9 +9,9 @@ const routes = require("./routes");
 const {
   notFound,
   developmentErrors,
-  productionErrors
+  productionErrors,
+  ValidationErrors
 } = require("./errorHandlers");
-
 const app = express();
 app.use(morgan("combined"));
 app.use(bodyParser.json());
@@ -20,6 +20,8 @@ app.use(cors());
 app.use("/", routes);
 
 app.use(notFound);
+
+app.use(ValidationErrors);
 
 // catch and send errors
 if (process.env.NODE_ENV === "development") {
