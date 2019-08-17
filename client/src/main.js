@@ -12,7 +12,7 @@ sync(store, router);
 new Vue({
   render: h => h(App),
   store,
-  vuetify,
   router,
+  vuetify,
   components: { App }
 }).$mount("#app");

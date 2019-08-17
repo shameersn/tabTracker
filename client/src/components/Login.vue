@@ -4,12 +4,12 @@
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4>
-          <v-card class="elevation-12">
-            <v-toolbar color="primary" dark flat>
-              <v-toolbar-title>Login</v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
-              <v-form>
+          <v-form>
+            <v-card class="elevation-12">
+              <v-toolbar color="primary" dark flat>
+                <v-toolbar-title>Login</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text>
                 <v-text-field
                   label="Email"
                   name="email"
@@ -30,16 +30,16 @@
                   v-model="password"
                   :rules="passWordRules"
                 ></v-text-field>
-              </v-form>
-            </v-card-text>
-            <v-footer v-if="error">
-              <div style="color: red">{{error}}</div>
-            </v-footer>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="login">login</v-btn>
-            </v-card-actions>
-          </v-card>
+              </v-card-text>
+              <v-footer v-if="error">
+                <div style="color: red">{{error}}</div>
+              </v-footer>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="login">login</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-form>
         </v-flex>
       </v-layout>
     </v-container>
