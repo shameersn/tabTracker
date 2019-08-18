@@ -5,7 +5,9 @@
         <v-card class="elevation-12">
           <v-toolbar color="primary" dark flat>
             <v-toolbar-title class="app-card-title">Songs</v-toolbar-title>
-            <v-spacer></v-spacer>
+            <v-spacer>
+              <song-search />
+            </v-spacer>
             <v-btn dark icon to="/songs/create">
               <v-icon dark>mdi-plus</v-icon>
             </v-btn>
@@ -44,6 +46,10 @@
               </v-flex>
             </v-layout>
           </v-card-text>
+
+          <v-card-text v-if="songs && songs.length === 0">
+            <p>No songs available</p>
+          </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
@@ -57,15 +63,27 @@
 </style>
 <script>
 import SongService from "../service/Songs";
+import SongSearch from "./SongSearch";
+
 export default {
   data: () => ({
-    songs: null
+    songs: null,
+    search: ""
   }),
   async mounted() {
     try {
       this.songs = (await SongService.get()).data;
     } catch (error) {
       // console.log(error)
+    }
+  },
+  components: { SongSearch },
+  watch: {
+    "$route.query.search": {
+      immediate: true,
+      async handler(value) {
+        this.songs = (await SongService.get(null, value)).data;
+      }
     }
   }
 };

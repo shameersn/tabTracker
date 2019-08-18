@@ -1,9 +1,31 @@
-const { Song } = require("../models");
+const {
+  Song,
+  Sequelize: { Op }
+} = require("../models");
 
 async function getSongs(req, res) {
-  const songs = await Song.findAll({
-    limit: 10
-  });
+  let where = {};
+  const { search } = req.query;
+  console.log(search);
+  if (search) {
+    where = {
+      [Op.or]: [
+        {
+          title: {
+            [Op.like]: `%${search}%`
+          }
+        },
+        {
+          artist: {
+            [Op.like]: `%${search}%`
+          }
+        }
+      ]
+    };
+  }
+  console.log(JSON.stringify(where));
+
+  const songs = await Song.findAll({ where, limit: 10 });
 
   res.status(200).json(songs);
 }

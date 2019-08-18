@@ -6,7 +6,7 @@
       </router-link>
     </v-toolbar-title>
     <v-toolbar-items>
-      <v-btn to="/songs" text exact="true">Browse</v-btn>
+      <v-btn to="/songs" :active-class="'active'" text exact>Browse</v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-btn v-if="!$store.state.isLoggedIn" to="/register" color="warning" dark>Register</v-btn>

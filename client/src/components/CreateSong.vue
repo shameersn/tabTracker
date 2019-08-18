@@ -111,7 +111,9 @@ export default {
 
       try {
         this.song = (await SongService.get(this.songId)).data;
-      } catch (error) {}
+      } catch (error) {
+        // console.log(error);
+      }
     }
   }
 };
