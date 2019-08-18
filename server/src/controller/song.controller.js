@@ -14,7 +14,31 @@ async function createSong(req, res) {
   res.status(201).json(song);
 }
 
+async function getSong(req, res) {
+  const { songId } = req.params;
+  const song = await Song.findOne({
+    where: {
+      id: songId
+    }
+  });
+
+  res.status(200).json(song);
+}
+
+async function updateSong(req, res) {
+  const { songId } = req.params;
+  const song = await Song.update(req.body, {
+    where: {
+      id: songId
+    }
+  });
+
+  res.status(200).json(song);
+}
+
 module.exports = {
   getSongs,
-  createSong
+  createSong,
+  getSong,
+  updateSong
 };
