@@ -5,6 +5,10 @@ import App from "./App";
 import vuetify from "./plugins/vuetify";
 import store from "@/store/store";
 
+import VueYouTubeEmbed from "vue-youtube-embed";
+// if you don't want install the component globally
+Vue.use(VueYouTubeEmbed);
+
 Vue.config.productionTip = false;
 
 sync(store, router);

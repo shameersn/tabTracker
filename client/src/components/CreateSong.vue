@@ -5,7 +5,7 @@
         <v-card class="elevation-12">
           <v-form>
             <v-toolbar color="primary" dark flat>
-              <v-toolbar-title class="app-card-title">Create Song</v-toolbar-title>
+              <v-toolbar-title class="app-card-title">{{ isEdit ? 'Edit' : 'Create'}} Song</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
               <v-text-field
@@ -58,7 +58,7 @@
             </v-footer>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" @click="createSong">Create Song</v-btn>
+              <v-btn color="primary" @click="createSong">{{isEdit ? 'Update' : 'Create'}} Song</v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -73,6 +73,8 @@
 import SongService from "../service/Songs";
 export default {
   data: () => ({
+    songId: null,
+    isEdit: false,
     song: {
       title: null,
       artist: null,
@@ -89,7 +91,11 @@ export default {
   methods: {
     async createSong() {
       try {
-        await SongService.post(this.song);
+        if (this.isEdit) {
+          await SongService.put(this.songId, this.song);
+        } else {
+          await SongService.post(this.song);
+        }
 
         this.$router.push("/songs");
       } catch (err) {
@@ -97,6 +103,16 @@ export default {
       }
     }
   },
-  async mounted() {}
+  async mounted() {
+    this.songId = this.$store.state.route.params.songId;
+
+    if (this.songId) {
+      this.isEdit = true;
+
+      try {
+        this.song = (await SongService.get(this.songId)).data;
+      } catch (error) {}
+    }
+  }
 };
 </script>
